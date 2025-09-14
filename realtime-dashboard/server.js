@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 const uri = process.env.MONGODB_URI;
@@ -30,6 +30,7 @@ async function connectDB() {
     if (existing) await collection.dropIndex("timestamp_1");
     await collection.createIndex({ timestamp: 1 }, { expireAfterSeconds: 2592000 });
   }
+  initializeBinanceSockets();
 }
 connectDB();
 
@@ -290,4 +291,48 @@ setInterval(emitCombined, 5000);
 
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
+});
+
+for (let key in binanceSockets) {
+  binanceSockets[key].on('message', msg => {
+    latestPrices[key] = parseFloat(JSON.parse(msg).p);
+  });
+
+  binanceSockets[key].on('error', err => {
+    console.error(`WebSocket error for ${key}:`, err.message);
+  });
+
+  binanceSockets[key].on('close', () => {
+    console.warn(`WebSocket closed for ${key}`);
+  });
+}
+
+function initializeBinanceSockets() {
+  const binanceSockets = {
+    bitcoin: new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade'),
+    ethereum: new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade'),
+    bnb: new WebSocket('wss://stream.binance.com:9443/ws/bnbusdt@trade'),
+    xrp: new WebSocket('wss://stream.binance.com:9443/ws/xrpusdt@trade'),
+    sol: new WebSocket('wss://stream.binance.com:9443/ws/solusdt@trade')
+  };
+
+  for (let key in binanceSockets) {
+    binanceSockets[key].on('message', msg => {
+      latestPrices[key] = parseFloat(JSON.parse(msg).p);
+    });
+
+    binanceSockets[key].on('error', err => {
+      console.error(`WebSocket error for ${key}:`, err.message);
+    });
+
+    binanceSockets[key].on('close', () => {
+      console.warn(`WebSocket closed for ${key}`);
+    });
+  }
+
+  setInterval(emitCombined, 5000);
+}
+
+app.get('/health', (req, res) => {
+  res.send('OK');
 });
