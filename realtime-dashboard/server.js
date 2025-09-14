@@ -23,14 +23,13 @@ async function connectDB() {
   const DB_NAME = process.env.DB_NAME;
   const database = client.db(DB_NAME);
   collection = database.collection("dataPoints");
-  // Index for sorting/querying
-  await collection.createIndex({ timestamp: 1 });
+  const indexes = await collection.indexes();
+  const existing = indexes.find(i => i.name === "timestamp_1");
 
-  // TTL index to auto-delete old records
-  await collection.createIndex(
-    { timestamp: 1 },
-    { expireAfterSeconds:  2592000  } // 1 months
-  );
+  if (!existing || existing.expireAfterSeconds !== 2592000) {
+    if (existing) await collection.dropIndex("timestamp_1");
+    await collection.createIndex({ timestamp: 1 }, { expireAfterSeconds: 2592000 });
+  }
 }
 connectDB();
 
@@ -87,32 +86,32 @@ function parseCondition(cond) {
   }
 
   // Handle synonyms for rising prices
-if (cond.includes('rose above') || cond.includes('increased above')) {
-  const match = cond.match(/(rose above|increased above)\s+([\d.]+)/);
-  if (match) {
-    const [, , value] = match;
-    const coinFields = ['bitcoin', 'ethereum', 'bnb', 'xrp', 'sol'];
-    mongoFilters.push({
-      $or: coinFields.map(field => ({
-        [field]: { $gt: parseFloat(value) }
-      }))
-    });
+  if (cond.includes('rose above') || cond.includes('increased above')) {
+    const match = cond.match(/(rose above|increased above)\s+([\d.]+)/);
+    if (match) {
+      const [, , value] = match;
+      const coinFields = ['bitcoin', 'ethereum', 'bnb', 'xrp', 'sol'];
+      mongoFilters.push({
+        $or: coinFields.map(field => ({
+          [field]: { $gt: parseFloat(value) }
+        }))
+      });
+    }
   }
-}
 
-// Handle synonyms for falling prices
-if (cond.includes('fell under') || cond.includes('went below')) {
-  const match = cond.match(/(fell under|went below)\s+([\d.]+)/);
-  if (match) {
-    const [, , value] = match;
-    const coinFields = ['bitcoin', 'ethereum', 'bnb', 'xrp', 'sol'];
-    mongoFilters.push({
-      $or: coinFields.map(field => ({
-        [field]: { $lt: parseFloat(value) }
-      }))
-    });
+  // Handle synonyms for falling prices
+  if (cond.includes('fell under') || cond.includes('went below')) {
+    const match = cond.match(/(fell under|went below)\s+([\d.]+)/);
+    if (match) {
+      const [, , value] = match;
+      const coinFields = ['bitcoin', 'ethereum', 'bnb', 'xrp', 'sol'];
+      mongoFilters.push({
+        $or: coinFields.map(field => ({
+          [field]: { $lt: parseFloat(value) }
+        }))
+      });
+    }
   }
-}
 
   // Above / Below
   if (cond.includes('above')) {
