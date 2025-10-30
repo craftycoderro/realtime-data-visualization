@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Time Data Visualization</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <h1>Real Time Data Visualization</h1>
+
+        <div class="content-wrapper">
+            <div class="center-wrapper">
+                <div id="liveSection" class="flex-row">
+                    <div id="chartContainer">
+                        <h2>Live View Count</h2>
+                        <canvas id="liveChart" width="700" height="425"></canvas>
+                    </div>
+                    <div class="right-panel">
+                        <div id="dataset" class="dropdown-card">
+                            <h2>Select Dataset</h2>
+                            <select id="datasetDropdown" onchange="switchDataset(this.value)">
+                                <option value="bitcoin">BTC</option>
+                                <option value="ethereum">ETH</option>
+                                <option value="bnb">BNB</option>
+                                <option value="xrp">XRP</option>
+                                <option value="sol">SOL</option>
+                            </select>
+                        </div>
+
+                        <div id="currentValue">
+                            <h3>Current Value: -</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="full-width-row">
+                <div class="flex-row bottom-section">
+                    <div id="statisticsPanel">
+                        <h3>Statistics</h3>
+                        <div class="stat-row"><strong>Avg:</strong> <span id="statAvg">-</span></div>
+                        <div class="stat-row"><strong>Min:</strong> <span id="statMin">-</span></div>
+                        <div class="stat-row"><strong>Max:</strong> <span id="statMax">-</span></div>
+                    </div>
+
+                    <div id="historyChartContainer">
+                        <h3>History Chart</h3>
+                        <!-- <div id="historyLoading" class="loading-spinner" style="display:none;">
+                            <div class="spinner"></div>
+                            <span>Loading history data...</span>
+                        </div> -->
+                        <canvas id="historyChart" width="700" height="400"></canvas>
+
+                        <select id="timeRangeSelector">
+                            <optgroup label="MINUTES">
+                                <option value="1m">1 minute</option>
+                                <option value="2m">2 minutes</option>
+                                <option value="3m">3 minutes</option>
+                                <option value="5m">5 minutes</option>
+                                <option value="10m">10 minutes</option>
+                                <option value="15m">15 minutes</option>
+                                <option value="30m">30 minutes</option>
+                                <option value="45m">45 minutes</option>
+                            </optgroup>
+                            <optgroup label="HOURS">
+                                <option value="1h" selected>1 hour</option>
+                                <option value="2h">2 hours</option>
+                                <option value="3h">3 hours</option>
+                                <option value="4h">4 hours</option>
+                            </optgroup>
+                            <optgroup label="DAYS">
+                                <option value="1d">1 day</option>
+                                <option value="1w">1 week</option>
+                                <option value="1m">1 month</option>
+                                <!-- <option value="3m">3 months</option>
+                                <option value="6m">6 months</option> -->
+                            </optgroup>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="nlpQuerySection" class="nlp-query-card">
+        <h3>Enter Query</h3>
+        <div class="nlp-input-group">
+            <input type="text" id="nlpQueryInput" placeholder="Try: bitcoin > 50000" />
+            <button onclick="applyNLPQuery()">Apply</button>
+        </div>
+    </div>
+
+    <div id="datasetTableContainer" style="margin-top: 40px; text-align: center;">
+        <h3>Dataset Table (Latest Data)</h3>
+        <table id="datasetTable" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Bitcoin (USD)</th>
+                    <th>Ethereum (USD)</th>
+                    <th>BNB (USD)</th>
+                    <th>XRP (USD)</th>
+                    <th>SOL (USD)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    </div>
+    <div id="footer">
+        <h2>Built by Rochana</h2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="app.js"></script>
+    </div>
+</body>
+
+</html>
