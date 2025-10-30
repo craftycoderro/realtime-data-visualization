@@ -41,4 +41,21 @@ User-friendly dashboard built with HTML, CSS, and Chart.js for smooth real-time 
 <li>MongoDB</li>
 <li>Chart.js</li><br><br>
 
-![Dashboard](pimg/Screenshot 2025-09-21 182539.png)
+<p align="center">
+  <img src="https://github.com/craftycoderro/realtime-data-visualization/blob/main/pimg/Screenshot%202025-09-21%20182539.png" alt="ETH Chart" width="45%" />
+  <img src="https://github.com/craftycoderro/realtime-data-visualization/blob/main/pimg/Screenshot%202025-09-21%20182601.png" alt="Dropdown Expanded" width="45%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/craftycoderro/realtime-data-visualization/blob/main/pimg/Screenshot%202025-09-21%20182623.png" alt="ETH Chart" width="45%" />
+  <img src="https://github.com/craftycoderro/realtime-data-visualization/blob/main/pimg/Screenshot%202025-09-21%20182717.png" alt="Dropdown Expanded" width="45%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/craftycoderro/realtime-data-visualization/blob/main/pimg/Screenshot%202025-09-21%20182752.png" alt="ETH Chart" width="45%" />
+  <img src="https://github.com/craftycoderro/realtime-data-visualization/blob/main/pimg/Screenshot%202025-09-21%20182803.png" alt="Dropdown Expanded" width="45%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/craftycoderro/realtime-data-visualization/blob/main/pimg/Screenshot%202025-09-22%20171355.png" alt="ETH Chart" width="45%" />
+</p>
