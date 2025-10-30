@@ -4,31 +4,31 @@ A real-time web application that collects live cryptocurrency data from Binance 
 
 
 <b><h1>✨ Features</h1><b>
-🔴 Real-Time Data Streaming:
+🔴 Real-Time Data Streaming:<br>
 Continuously fetches live cryptocurrency prices from Binance using WebSocket APIs.
 
-📊 Interactive Data Visualization:
+📊 Interactive Data Visualization:<br>
 Displays real-time and historical data trends using Chart.js with zoom and pan functionality.
 
-💾 Distributed Data Storage:
+💾 Distributed Data Storage:<br>
 Stores all incoming data in MongoDB Atlas, ensuring scalability and persistent storage.
 
-⚡ Live Dashboard Updates:
+⚡ Live Dashboard Updates:<br>
 Uses Socket.io to broadcast new data instantly to all connected clients.
 
-🧮 Dynamic Statistical Insights:
+🧮 Dynamic Statistical Insights:<br>
 Automatically calculates and displays average, minimum, and maximum values for selected datasets.
 
-🧠 NLP Query Filtering:
+🧠 NLP Query Filtering:<br>
 Accepts natural language queries (e.g., “bitcoin > 50000” or “show me coins that dropped below 50 recently”) to dynamically filter data.
 
-⏱ Custom Time Range Selection:
+⏱ Custom Time Range Selection:<br>
 View historical data over adjustable time ranges — from minutes to days.
 
-🪄 Multi-Dataset Support:
+🪄 Multi-Dataset Support:<br>
 Supports multiple cryptocurrencies including BTC, ETH, BNB, XRP, and SOL.
 
-💻 Clean and Responsive UI:
+💻 Clean and Responsive UI:<br>
 User-friendly dashboard built with HTML, CSS, and Chart.js for smooth real-time interaction.
 
 <b><h1>It was build with...</h1><b>
@@ -40,3 +40,5 @@ User-friendly dashboard built with HTML, CSS, and Chart.js for smooth real-time 
 <li>Socket.io</li>
 <li>MongoDB</li>
 <li>Chart.js</li><br><br>
+
+![Dashboard](pimg/Screenshot 2025-09-21 182539.png)
